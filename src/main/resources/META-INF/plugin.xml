@@ -1,0 +1,43 @@
+<idea-plugin>
+    <id>com.namey</id>
+    <name>Namey</name>
+    <version>1.0.0</version>
+    <vendor email="builtkwon@gmail.com">builtkwon</vendor>
+    <description><![CDATA[
+        함수 바디를 분석해 AI가 적절한 함수명을 추천해주는 플러그인입니다.<br/>
+        <b>Alt+N</b>으로 현재 함수에 대한 이름 3개를 즉시 추천받고, 선택하면 호출부까지 자동 리네임합니다.
+    ]]></description>
+
+    <idea-version since-build="232" until-build="241.*"/>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.java</depends>
+    <depends>org.jetbrains.kotlin</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationService
+            serviceImplementation="com.namey.presentation.intellij.NameySettings"/>
+
+        <applicationConfigurable
+            parentId="tools"
+            instance="com.namey.presentation.intellij.NameyConfigurable"
+            id="com.namey.settings"
+            displayName="Namey"/>
+
+        <notificationGroup
+            id="Namey"
+            displayType="BALLOON"
+            key="notification.group.namey"/>
+    </extensions>
+
+    <actions>
+        <action
+            id="com.namey.SuggestNameAction"
+            class="com.namey.presentation.intellij.SuggestNameAction"
+            text="함수명 추천 (Namey)"
+            description="AI를 이용해 현재 함수의 이름을 추천합니다">
+            <keyboard-shortcut keymap="$default" first-keystroke="alt N"/>
+            <add-to-group group-id="EditorPopupMenu" anchor="last"/>
+        </action>
+    </actions>
+</idea-plugin>
